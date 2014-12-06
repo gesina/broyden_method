@@ -67,19 +67,19 @@ int lu_decomposition(double** A, int* pi, int dim)
       *(A+k)=*(A+pos_max_entry);
       *(A+pos_max_entry)=temp_a;
 
-      // print step
-      printf("\n\n STEP %d\n", k+1);
-      printf("*******************");
-      // print current Pivot index
-      printf("\nCurrent Pivot index:  A[%d][%d] = %f", pos_max_entry, k, (*(*A+k)+k));
-      printf("\n Matrix:\n");
-      print_matrix(A, dim);
-      printf("\n Permutation vector:\n");
-      // print pi
-      for(int i=0; i<dim; i++)
-	{
-	  printf("   %d \n", *(pi+i));
-	}
+      /* // print step */
+      /* printf("\n\n STEP %d\n", k+1); */
+      /* printf("*******************"); */
+      /* // print current Pivot index */
+      /* printf("\nCurrent Pivot index:  A[%d][%d] = %f", pos_max_entry, k, (*(*A+k)+k)); */
+      /* printf("\n Matrix:\n"); */
+      /* print_matrix(A, dim); */
+      /* printf("\n Permutation vector:\n"); */
+      /* // print pi */
+      /* for(int i=0; i<dim; i++) */
+      /* 	{ */
+      /* 	  printf("   %d \n", *(pi+i)); */
+      /* 	} */
 
 
 
@@ -87,9 +87,8 @@ int lu_decomposition(double** A, int* pi, int dim)
       // LU Decomposition
       //---------------------------------
       // check, whether next step executable:
-      if ( max_entry == 0 )
+      if ( fabs(max_entry) <= DBL_EPSILON )
 	{
-	  err_not_executable(k+1);
 	  return k+1;
 	}
 
@@ -107,9 +106,9 @@ int lu_decomposition(double** A, int* pi, int dim)
 	    }
 	}
 
-      // print result of this step
-      printf("\n New Matrix:\n");
-      print_matrix(A, dim);
+      /* // print result of this step */
+      /* printf("\n New Matrix:\n"); */
+      /* print_matrix(A, dim); */
       
     }
 
@@ -117,13 +116,13 @@ int lu_decomposition(double** A, int* pi, int dim)
   // last check on singularity:
   if ( fabs(*(*(A+dim-1)+dim-1)) <= DBL_EPSILON ) // last pivot element zero?
     {
-      printf("\n\nRESULT of LU DECOMPOSITION:\n");
-      printf("************************************************************\n");
-      printf("\nThe LU decomposition of A results in\n");
-      print_matrix(A, dim);
-      printf("\nBut A is not regular!!");
-      printf("\nThus there's not always a solution for Ax=b independently of b,");
-      printf("\n  and we cannot proceed, sorry.\n\n");
+      /* printf("\n\nRESULT of LU DECOMPOSITION:\n"); */
+      /* printf("************************************************************\n"); */
+      /* printf("\nThe LU decomposition of A results in\n"); */
+      /* print_matrix(A, dim); */
+      /* printf("\nBut A is not regular!!"); */
+      /* printf("\nThus there's not always a solution for Ax=b independently of b,"); */
+      /* printf("\n  and we cannot proceed, sorry.\n\n"); */
       
       return dim;  // return last step failed
     }
@@ -221,12 +220,12 @@ int solve_equation(double** A, double* b, int dimension, double* x)
     };
   
   // write entries of permutation vector
-  for (int i=0; i<dimension; i++){ *(return_struct.pi+i) = i;}
+  for (int i=0; i<dimension; i++){ *(pi+i) = i;}
 
 
   // init of LU matrix
   double** LU = init_matrix(dimension);
-  if (!return_struct.LU)            // error with allociation?
+  if (!LU)            // error with allociation?
     {
       return -1;  // return: allociation error
     }
@@ -238,16 +237,18 @@ int solve_equation(double** A, double* b, int dimension, double* x)
   // decompose A to LU and set step as success indicator
   // (step=0: worked well;
   //  step>0: failed on step number step)
-  int step=lu_decomposition(LU, return_struct.pi, dimension);
+  int step=lu_decomposition(LU, pi, dimension);
   if( step>0 ) // worked?
     {
       printf("LU decomposition failed at step %d", step);
       return -1;
     }
 
+  double* z=init_vector(dimension);
+  copy_vector(z, b, dimension);
   // forward substitution: b~>z
   forward_substitution(b, pi, LU, dimension);
-  
+  backward_substitution(z, LU, x, dimension);
   
   return return_struct;  // return LU, pi, step
   

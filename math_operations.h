@@ -31,7 +31,7 @@
 
 
 
-// copy function
+// copy function for matrices
 void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
 {
   // rows
@@ -44,3 +44,20 @@ void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
 	}
     };
 }
+
+
+
+// copy function for vectors
+void copy_matrix(double* a, double* b ,int dim) // copy matrix A into B
+{
+  for (int i=0; i<dim; i++)
+    {
+      *(b+i) = *(a+i);
+    }
+}
+
+
+// multiplication of matrices
+
+
+// addition of matrices

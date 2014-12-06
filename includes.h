@@ -71,6 +71,7 @@ void free_memory_vector(void* x);   // free memory from vector
 
 // MATH-OPERATIONS
 void copy_matrix(double** A,double** B,int dim); // copy matrix A into B
+void copy_vector(double* a, double* b, int dim); // copy vector a into b
 
 void add_matrix(double** A, double** B, int m, int n); // add two mxn-matrices
 void mult_matrix(double** A, double** B,int m, int n); // mult mxn-matrix A
@@ -94,13 +95,16 @@ double example_ii(double x, double y);
 double example_iii(double x, double y);
 
 
+// BROYDEN METHOD FUNCTIONS
+
+
 // HOMEMADE LIBRARIES
 #include "print.h"              // print & error functions
 #include "input.h"              // init, free & copy functions 
 #include "solve_equation.h"     // LU_decomposition for Ax=b
 #include "math_operations.h"    // matrix math operations
 #include "functions.h"          // function options
-
+#include "broyden_method.h"     // Broyden's method
 
 // ERROR CODES:
 //  3: tolerance error, tolerance after user input lower 0
