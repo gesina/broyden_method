@@ -59,10 +59,14 @@ char get_function()  // ask user for input of yes or no
       while(getchar()!='\n');  // necessary to avoid reading newline
       scanf("%c", &c);                             // get user input
       // check, whether input is in FUNCTION_OPTIONS-string
-      if ( strchr(FUNCTION_OPTIONS, c) != NULL ) {b=0;}   // input ok --> quit
+      if ( strchr(FUNCTION_OPTIONS, c) != NULL ) {
+	printf("You entered option %c.", c);
+	//b=get_yesno();}   // input ok --> quit
+	b=0;}
       else {
 	printf("\nPlease enter only one of the following %s: ", FUNCTION_OPTIONS_PRINT);
       }// not ok --> repeat
+      
     }
   while(b);
   return c; // return a function-id

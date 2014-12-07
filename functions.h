@@ -36,3 +36,22 @@ double* linear(double* arg, int dim) // for reusability: take dimension as argum
   return arg;
 }
 
+double* example_ii(double* arg, int dim)  // for reusability: take dimension as argument
+{
+  double* y=init_vector(2);
+  
+  y[0]=(arg[0]+3) * (pow(arg[1],3) -7)+18;
+  y[1]= sin(arg[1] * exp(arg[0]) -1);
+
+  return y;
+}
+
+double* example_iii(double* arg, int dim) // for reusability: take dimension as argument
+{
+  double* y=init_vector(2);
+
+  y[0]=arg[0]+arg[1]-3;
+  y[1]=pow(arg[0],2)+pow(arg[1],2)-9;
+
+  return y;
+}
