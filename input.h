@@ -1,4 +1,3 @@
-
 /* ************************************************ */
 /*                                                  */
 /*   FILE: input.h                                  */
@@ -54,24 +53,24 @@ char get_function()  // ask user for input of yes or no
 {
   _Bool b=1;
   char c=' ';
-  printf("\n Please enter yes (y) or no (n):  ");
-   do
+  printf("\n Please enter one of the following%s:  ", FUNCTION_OPTIONS_PRINT);
+  do
     {
       while(getchar()!='\n');  // necessary to avoid reading newline
       scanf("%c", &c);                             // get user input
       // check, whether input is in FUNCTION_OPTIONS-string
-      if ( !strchr(FUNCTION_OPTIONS, c) ) {b=0;}   // input ok --> quit
+      if ( strchr(FUNCTION_OPTIONS, c) != NULL ) {b=0;}   // input ok --> quit
       else {
-	for(printf("\nPlease enter %s: ", FUNCTION_OPTIONS_PRINT); }// not ok --> repeat
+	printf("\nPlease enter only one of the following %s: ", FUNCTION_OPTIONS_PRINT);
+      }// not ok --> repeat
     }
   while(b);
-
   return c; // return a function-id
 }
 
 
 
-int get_tolerance()  // gets the convergence tolerance
+double get_tolerance()  // gets the convergence tolerance
 {
 
   double tol = -1; // tolerance to return
@@ -81,12 +80,11 @@ int get_tolerance()  // gets the convergence tolerance
   do  // as long as input doesn't make sense: repeat
     {
       b=0; // stop if not set to 1
-
-      //      while(getchar()!='\n');  // necessary to avoid reading newline
-      scanf("%", &dim); // user read in
-
+      
+      //while(getchar()!='\n');  // necessary to avoid reading newline
+      scanf("%lf", &tol); // user read in
       // verify input
-      if ( dim <= 0 )
+      if ( tol <= 0 )
 	{
 	  b=1;   // repeat if senseless ...
 	  printf("\n  Please enter a dimension greater than zero!");
@@ -110,7 +108,7 @@ void set_matrix(double** A, int dim) // gets+sets matrix entries from user (A)
   _Bool b=0;     // test bool for while-loop
   char c=' ';     // helper character
 
-  printf("Dimension for set_matrix: %d\n" , dim);
+  printf("\nDimension for set_matrix: %d\n" , dim);
   printf("Please enter the matrix entries separately.");
   do  // as long as input doesn't make sense: repeat
     {
@@ -171,7 +169,7 @@ void set_vector(double* b, int dim) // gets+sets vector entries from user (b)
       // ask, wether to continue or to try again  
       printf("\nYour entries have produced this vector:\n");
       print_vector(b, dim);
-      printf("Take these entries and proceed with LU Decomposition?");
+      printf("Take these entries?");
       
       c = get_yesno();
       if ( c=='y' ) { g=0;}
@@ -187,30 +185,30 @@ void set_vector(double* b, int dim) // gets+sets vector entries from user (b)
 // MEMORY MANAGEMENT
 
 // allocation functions
-double** init_matrix(int dim)
+ double** init_matrix(int m, int n)
 {
   // allocate space for matrix row-pointer
-  double** matrix = (double**) malloc(dim*sizeof(double*));
+  double** matrix = (double**) malloc(m*sizeof(double*));
   
   // got space in memory?
   if ( matrix == NULL )
     {
-      printf("Error allociating space in memory for the matrix!\n");
-      printf("Problem occured with init of A");
+      printf("\nError allociating space in memory for the matrix!\n");
+      printf("Problem occured with init of A\n");
       return NULL; // exit
     }
 
   // allocate space for matrix rows 
-  for ( int i=0; i<dim; i++)
+  for ( int i=0; i<m; i++)
     {
       // and for entries in rows
-      matrix[i] = (double*) malloc(dim*sizeof(double));
+      matrix[i] = (double*) malloc(n*sizeof(double));
 
       // got space in memory?
       if(matrix[i] == NULL)
 	{
-	  printf("Error allociating space in memory for the matrix!\n");
-	  printf("Problem occured with row: A[%d]", i);
+	  printf("\nError allociating space in memory for the matrix!\n");
+	  printf("Problem occured with row: A[%d]\n", i);
 	  return NULL; // exit
 	}
     }
@@ -228,8 +226,8 @@ double* init_vector(int dim) // allocates memory for vector
   // got space in memory?
   if ( vector == NULL )
     {
-      printf("Error allociating space in memory for the vector!\n");
-      printf("Problem occured with init of vector.");
+      printf("\nError allociating space in memory for the vector!\n");
+      printf("Problem occured with init of vector.\n");
       return NULL; // exit
     }
 

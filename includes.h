@@ -34,8 +34,7 @@
 #include<stdlib.h>     // malloc & free for matrix/vector init
 #include<stdio.h>      // printf(), scanf()
 #include<math.h>       // fabs()
-#include <stdio.h>     // strchr(char*, char) to find char in string
-
+#include<string.h>     // strchr()
 // VARIABLES
 static int dimension = -1; // -1: to test, whether get_dimension() worked
 static double tolerance = -1; // -1: to test, whether get_tolerance() worked
@@ -44,7 +43,7 @@ static double tolerance = -1; // -1: to test, whether get_tolerance() worked
     (2) example_ii(): ...
  */
 #define FUNCTION_OPTIONS "1"
-#define FUNCTION_OPTIONS_PRINT LINEAR + EXAMPLE_II
+#define FUNCTION_OPTIONS_PRINT "\n  (1) f(x)=x-1\n  (2) f(x)=...\n  (3) f(x)=..\n"
 
 // machine epsilon
 #define DBL_EPSILON 2.2204460492503131E-16
@@ -57,20 +56,20 @@ void print_matrix(double** A, int dim);
 void print_vector(double* b, int dim);
 
 // GET-FUNCTIONS
-int get_tolerance(); // gets convergence tolerance
+double get_tolerance(); // gets convergence tolerance
 char get_function(); // gets wanted function to get zero of
 void set_matrix(double** B, int dim); // gets+sets matrix entries from user
 void set_vector(double* x, int dim); // gets+sets vector entries from user
 
 // INIT-FUNCTIONS
-double** init_matrix(int dim); // allocates memory for matrix
+double** init_matrix(int m,int n); // allocates memory for mxn-matrix
 double* init_vector(int dim); // allocates memory for vector
 void free_memory_matrix(double** A, int dim);  // free memory from matrix
 void free_memory_vector(void* x);   // free memory from vector
 
 
 // MATH-OPERATIONS
-void copy_matrix(double** A,double** B,int dim); // copy matrix A into B
+void copy_matrix(double** A,double** B,int m,int n); // copy mxn-matrix A into B
 void copy_vector(double* a, double* b, int dim); // copy vector a into b
 
 void add_matrix(double** A, double** B, int m, int n); // add two mxn-matrices
@@ -86,13 +85,13 @@ void backward_substitution(double** U, double* z, double* x, int dim);// solve U
 
 // FUNCTIONS AND FUNCTION DESCRIPTIONS
 #define LINEAR "LINEAR"
-double linear(double x);
+double* linear(double* arg, int dimension);
 
-#define EXAMPLE_II "..."
-double example_ii(double x, double y);
+/* #define EXAMPLE_II "..." */
+/* double example_ii(double* arg, int dimension); */
 
-#define EXAMPLE_III "...."
-double example_iii(double x, double y);
+/* #define EXAMPLE_III "...." */
+/* double example_iii(double* arg, int dimension); */
 
 
 // BROYDEN METHOD FUNCTIONS

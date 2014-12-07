@@ -67,23 +67,7 @@ int lu_decomposition(double** A, int* pi, int dim)
       *(A+k)=*(A+pos_max_entry);
       *(A+pos_max_entry)=temp_a;
 
-      /* // print step */
-      /* printf("\n\n STEP %d\n", k+1); */
-      /* printf("*******************"); */
-      /* // print current Pivot index */
-      /* printf("\nCurrent Pivot index:  A[%d][%d] = %f", pos_max_entry, k, (*(*A+k)+k)); */
-      /* printf("\n Matrix:\n"); */
-      /* print_matrix(A, dim); */
-      /* printf("\n Permutation vector:\n"); */
-      /* // print pi */
-      /* for(int i=0; i<dim; i++) */
-      /* 	{ */
-      /* 	  printf("   %d \n", *(pi+i)); */
-      /* 	} */
 
-
-
-      
       // LU Decomposition
       //---------------------------------
       // check, whether next step executable:
@@ -105,28 +89,12 @@ int lu_decomposition(double** A, int* pi, int dim)
 	      *(*(A+i)+j) = *(*(A+i)+j) - ( (*(*(A+i)+k)) * (*(*(A+k)+j)) );
 	    }
 	}
-
-      /* // print result of this step */
-      /* printf("\n New Matrix:\n"); */
-      /* print_matrix(A, dim); */
-      
     }
 
 
   // last check on singularity:
   if ( fabs(*(*(A+dim-1)+dim-1)) <= DBL_EPSILON ) // last pivot element zero?
-    {
-      /* printf("\n\nRESULT of LU DECOMPOSITION:\n"); */
-      /* printf("************************************************************\n"); */
-      /* printf("\nThe LU decomposition of A results in\n"); */
-      /* print_matrix(A, dim); */
-      /* printf("\nBut A is not regular!!"); */
-      /* printf("\nThus there's not always a solution for Ax=b independently of b,"); */
-      /* printf("\n  and we cannot proceed, sorry.\n\n"); */
-      
-      return dim;  // return last step failed
-    }
-  
+    {  return dim; } // return last step failed
 
   return 0; // finished and worked well
 }
@@ -137,10 +105,9 @@ int lu_decomposition(double** A, int* pi, int dim)
 
 // FORWARD SUBSTITUTION
 // changes given vector b to z
-void forward_substitution(double* b_in, int* pi, double** L, int dim)
+void forward_substitution(double* b, int* pi, double** L, int dim)
 {
   double temp_b=0; // for swaping of row entries
-  double* b = copy_matrix
   
   // first swap all rows into new order
   for (int k=0; k<dim-1; k++)
@@ -161,12 +128,6 @@ void forward_substitution(double* b_in, int* pi, double** L, int dim)
 	  *(b+i) = *(b+i) - ( (*(*(L+i)+k)) * (*(b+k)) );
 	}
     }
-
-
-  // print result
-  printf("\n Vector after forward substitution:\n");
-  print_vector(b, dim);
-  
 }
 
 
@@ -198,18 +159,11 @@ void backward_substitution(double** U, double* z, double* x, int dim)
 
 
 
-
-
-
 // prepares call of lu_decomposition
 //   (init of LU, pi)
 // and returns struct with LU, pi, step
 int solve_equation(double** A, double* b, int dimension, double* x)
-{
-  // init of struct to return
-  // with default value for allociation error
-  struct LU_pi_step return_struct = {NULL, NULL, -1};
-  
+{ 
   // init of permutation vector pi
   int* pi= (int*) malloc(dimension*sizeof(int));
   if ( pi == NULL )   // error with allociation?
@@ -224,15 +178,14 @@ int solve_equation(double** A, double* b, int dimension, double* x)
 
 
   // init of LU matrix
-  double** LU = init_matrix(dimension);
+  double** LU = init_matrix(dimension, dimension);
   if (!LU)            // error with allociation?
-    {
-      return -1;  // return: allociation error
-    }
-  
-  // set return_struct.LU to A:
-  copy_matrix(A, LU, dimension);
+    { return -1; }  // return: allociation error
+  copy_matrix(A, LU, dimension, dimension);
 
+  // backup of b
+  double* z= init_vector(dimension);
+  copy_vector(z, b, dimension);
   
   // decompose A to LU and set step as success indicator
   // (step=0: worked well;
@@ -241,18 +194,13 @@ int solve_equation(double** A, double* b, int dimension, double* x)
   if( step>0 ) // worked?
     {
       printf("LU decomposition failed at step %d", step);
-      return -1;
+      return step;
     }
 
-  double* z=init_vector(dimension);
-  copy_vector(z, b, dimension);
-  // forward substitution: b~>z
-  forward_substitution(b, pi, LU, dimension);
-  backward_substitution(z, LU, x, dimension);
+  // substitutions
+  forward_substitution(z, pi, LU, dimension);
+  backward_substitution(LU,z, x, dimension);
   
-  return return_struct;  // return LU, pi, step
+  return 0;  // return step
   
 }
-
-
-

@@ -1,7 +1,7 @@
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: math_operations.h                        */
+/*   FILE: functions.h                              */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
@@ -23,41 +23,16 @@
 
 //---------------------------------------------------
 //
-//   Matrix math operations
+//  Functions to get the zero of
 //
 //---------------------------------------------------
 
 
-
-
-
-// copy function for matrices
-void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
+// LINEAR
+// f(x) = x-1
+double* linear(double* arg, int dim) // for reusability: take dimension as argument
 {
-  // rows
-  for (int i=0; i<m; i++)
-    {
-      //columns
-      for ( int j=0; j<n; j++)
-	{
-	  *(*(B+i)+j) = *(*(A+i)+j);
-	}
-    };
+  *arg = *arg-1;
+  return arg;
 }
 
-
-
-// copy function for vectors
-void copy_vector(double* a, double* b ,int dim) // copy vector a into b
-{
-  for (int i=0; i<dim; i++)
-    {
-      *(a+i) = *(b+i);
-    }
-}
-
-
-// multiplication of matrices
-
-
-// addition of matrices
