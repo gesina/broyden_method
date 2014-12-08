@@ -52,13 +52,13 @@ void print_exit()
 }
 
 // matrix
-void print_matrix(double** A, int dim)
+void print_matrix(double** A, int m, int n)
 {
   //rows
-  for (int i=0; i<dim; i++)
+  for (int i=0; i<m; i++)
     {
       //columns
-      for(int j=0; j<dim; j++)
+      for(int j=0; j<n; j++)
 	{
 	  printf("  %6.3f  ", *(*(A+i)+j)); // simple print: total 6 numbers, 3 after comma
 	}
