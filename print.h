@@ -46,7 +46,7 @@ void print_init()
 void print_exit()
 {
   printf("\nThanks for using this little programm.\n");
-  printf("\n      Yours");
+  printf("\n      Yours sincerely");
   printf("\n             Kerstin Blomenhofer");
   printf("\n             Gesina Schwalbe\n\n");
 }
