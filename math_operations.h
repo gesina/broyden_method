@@ -91,4 +91,6 @@ double** add_matrix(double** A, double** B, int m, int n)
   	  C[i][j] = A[i][j] + B[i][j];
       }
   }
+
+  return C;
 }

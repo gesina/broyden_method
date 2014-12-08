@@ -106,18 +106,17 @@ int main(void)
   /* print_vector(x, dimension); */
 
   // test of matrix operations
-  int m,n,k;
+  int m,n;
   printf("\nm: ");
   m=get_tolerance();
   printf("\nn: ");
   n=get_tolerance();
-  printf("\nk: ");
-  k=get_tolerance();
+
   printf("\nmatrix A: ");
   double** A = init_matrix(n,m); set_matrix(A, m,n);
-  double** B = init_matrix(n,m); set_matrix(B,n,k);
+  double** B = init_matrix(n,m); set_matrix(B,m,n);
 
-  print_matrix(mult_matrix(A,B,m,n,k),m,k);
+  print_matrix(add_matrix(A,B,m,n),m,n);
 
   
   // check on success
