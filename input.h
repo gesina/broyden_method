@@ -242,10 +242,10 @@ double* init_vector(int dim) // allocates memory for vector
 
 
 // memory free functions
-void free_memory_matrix(double** A, int dim)     // free memory from matrix
+void free_memory_matrix(double** A, int m, int n)     // free memory from matrix
 {
   // free rows
-  for (int i=0; i<dim; i++)
+  for (int i=0; i<m; i++)
     {
       free(A[i]);
     }

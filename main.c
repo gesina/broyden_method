@@ -76,7 +76,7 @@ int main(void)
   }
 
   /* //for LU decomposition test */
-  /* dimension=get_tolerance(); */
+   dimension=get_tolerance(); 
   
 
   // get start value of x
@@ -101,9 +101,14 @@ int main(void)
   /* printf("Number of steps: %d", solve_equation(B, x, dimension, z)); */
 
   // test of example_ii(i)
-  print_vector(x, dimension);
-  double* z= function(x, dimension);
-  print_vector(x, dimension);
+  /* print_vector(x, dimension); */
+  /* double* z= function(x, dimension); */
+  /* print_vector(x, dimension); */
+
+  // test of matrix operations
+  double* z = matrix_test(x, B, dimension);
+
+  
   // check on success
   
   
@@ -116,7 +121,7 @@ int main(void)
   
   
   // last but not least:
-  free_memory_matrix(B, dimension);
+  free_memory_matrix(B, dimension, dimension);
   free_memory_vector(x);
 
 

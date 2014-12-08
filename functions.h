@@ -55,3 +55,31 @@ double* example_iii(double* arg, int dim) // for reusability: take dimension as 
 
   return y;
 }
+
+
+double* matrix_test(double* arg, double** B, int dim) // for reusability: take dimension as argument
+{
+  // vector to matrix
+  double** v= init_matrix(3,1);
+  if( v!= NULL)
+    {
+      for(int i=0; i<3; i++)
+	{
+	  v[i][0]= arg[i];
+	}
+      double** C= mult_matrix(B, v, 3,3,1);
+      
+      // and back to vector
+      double* c= init_vector(3);
+      if(C!= NULL && c!= NULL) // multiplikation worked?
+	{
+	  for(int i=0; i<3; i++)
+	    {
+	      c[i] = C[i][0];
+	    }
+	}
+      free_memory_matrix(C, 3, 1);
+      return c;
+    }
+  return NULL; 
+}
