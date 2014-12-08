@@ -74,11 +74,3 @@ void print_vector(double* b, int dim)
       printf("   %f \n", *(b+i));
     }
 }
-
-
-// prints index of last step
-void err_not_executable(int step_index)
-{
-  printf("\n\nSorry, the matrix cannot be pivoted!\n");
-  printf("Failed step:  %d\n", step_index);
-}
