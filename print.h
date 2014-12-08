@@ -46,21 +46,21 @@ void print_init()
 void print_exit()
 {
   printf("\nThanks for using this little programm.\n");
-  printf("\n      Yours");
+  printf("\n      Yours sincerely");
   printf("\n             Kerstin Blomenhofer");
   printf("\n             Gesina Schwalbe\n\n");
 }
 
 // matrix
-void print_matrix(double** A, int dim)
+void print_matrix(double** A, int m, int n)
 {
   //rows
-  for (int i=0; i<dim; i++)
+  for (int i=0; i<m; i++)
     {
       //columns
-      for(int j=0; j<dim; j++)
+      for(int j=0; j<n; j++)
 	{
-	  printf("  %6.3f  ", *(*(A+i)+j)); // simple print: total 3 numbers, 1 after comma
+	  printf("  %6.3f  ", *(*(A+i)+j)); // simple print: total 6 numbers, 3 after comma
 	}
       printf("\n");  // begin new row
     }
@@ -73,12 +73,4 @@ void print_vector(double* b, int dim)
     {
       printf("   %f \n", *(b+i));
     }
-}
-
-
-// prints index of last step
-void err_not_executable(int step_index)
-{
-  printf("\n\nSorry, the matrix cannot be pivoted!\n");
-  printf("Failed step:  %d\n", step_index);
 }
