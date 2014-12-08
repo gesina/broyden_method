@@ -106,32 +106,32 @@ double get_tolerance()  // gets the convergence tolerance
 
 
  
-void set_matrix(double** A, int dim) // gets+sets matrix entries from user (A)
+void set_matrix(double** A, int m, int n) // gets+sets matrix entries from user (A)
 {
   
   _Bool b=0;     // test bool for while-loop
   char c=' ';     // helper character
 
-  printf("\nDimension for set_matrix: %d\n" , dim);
+  printf("\nDimension for set_matrix: %i x %i\n" , m, n);
   printf("Please enter the matrix entries separately.");
   do  // as long as input doesn't make sense: repeat
     {
       b=1; // stop default
       
-      for (int i=0; i<dim; i++)
+      for (int i=0; i<m; i++)
 	{
 	  printf("\n Enter row #%i:\n", i+1);
 
 	  // read entries in
-	  for ( int j=0; j<dim; j++)
+	  for ( int j=0; j<n; j++)
 	    {
 	      while(getchar()!='\n');  // necessary to avoid reading newline
 	      scanf("%lf", (*(A+i)+j)); // user read in
 	    }
 	  
 	  // show full row:
-	  printf("Row #%d: ", i+1);
-	  for (int k=0; k<dim; k++)
+	  printf("Row #%i: ", i+1);
+	  for (int k=0; k<n; k++)
 	    {
 	      printf(" | %f", *(*(A+i)+k));
 	    }
@@ -139,7 +139,7 @@ void set_matrix(double** A, int dim) // gets+sets matrix entries from user (A)
 
       // ask, wether to continue or to try again  
       printf("\nYour entries have produced this matrix:\n");
-      print_matrix(A, dim);
+      print_matrix(A, m,n);
       printf("Take these entries?");
       
       c = get_yesno();

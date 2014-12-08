@@ -56,13 +56,13 @@ static double tolerance = -1; // -1: to test, whether get_tolerance() worked
 void print_init(); // greetings
 void print_exit(); // bye bye
 
-void print_matrix(double** A, int dim);
+void print_matrix(double** A, int m, int n);
 void print_vector(double* b, int dim);
 
 // GET-FUNCTIONS
 double get_tolerance(); // gets convergence tolerance
 char get_function(); // gets wanted function to get zero of
-void set_matrix(double** B, int dim); // gets+sets matrix entries from user
+void set_matrix(double** B, int m, int n); // gets+sets matrix entries from user
 void set_vector(double* x, int dim); // gets+sets vector entries from user
 
 // INIT-FUNCTIONS

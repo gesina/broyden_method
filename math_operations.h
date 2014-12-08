@@ -61,10 +61,11 @@ void copy_vector(double* a, double* b ,int dim) // copy vector a into b
 double** mult_matrix(double** A, double** B, int m, int n, int l)
 //m Zeilen von A, n Spalten von A und Zeilen von B, l Spalten von B
 {
+  printf("\nm is %i, n is %i, k is %i\n",m,n,l);
   double** C=init_matrix(m, l);
   
   for(int i=0; i<m; i++) //Zeilen
-  {
+    {
     for(int k=0; k<l; k++) //Spalten
     {
     	for(int j=0; j<n; j++) 
@@ -73,6 +74,8 @@ double** mult_matrix(double** A, double** B, int m, int n, int l)
     	}
     }
   }
+  
+  return C;
 }
 
 
