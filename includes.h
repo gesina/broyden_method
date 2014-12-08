@@ -46,8 +46,7 @@ static double tolerance = -1; // -1: to test, whether get_tolerance() worked
 #define FUNCTION_OPTIONS "123"
 #define FUNCTION_OPTIONS_PRINT "\n  (1) f(x)=x-1\n \
  (2) f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}\n \
- (3) f(x) = {{x1+x2-3},{x1^2+x2^2-9}}\n \
- (4) f(x) = B*x (with B 3x3-Matrix)"
+ (3) f(x) = {{x1+x2-3},{x1^2+x2^2-9}}\n"
 
 // machine epsilon
 #define DBL_EPSILON 2.2204460492503131E-16
@@ -89,13 +88,13 @@ void backward_substitution(double** U, double* z, double* x, int dim);// solve U
 
 // FUNCTIONS AND FUNCTION DESCRIPTIONS
 #define LINEAR "LINEAR"
-double* linear(double* arg, int dimension);
+double* linear(double* arg);
 
 #define EXAMPLE_II "f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}"
-double* example_ii(double* arg, int dimension);
+double* example_ii(double* arg);
 
 #define EXAMPLE_III "f(x) = {{x1+x2-3},{x1^2+x2^2-9}}"
-double* example_iii(double* arg, int dimension);
+double* example_iii(double* arg);
 
 // BROYDEN METHOD FUNCTIONS
 
