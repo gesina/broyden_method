@@ -58,6 +58,37 @@ void copy_vector(double* a, double* b ,int dim) // copy vector a into b
 
 
 // multiplication of matrices
+void mult_matrix(double** A, double** B, int m, int n) //m Zeilen, n Spalten
+{
+  double** C=init_matrix(m, m);
+  
+  for(int i=0; i<m; i++) //Zeilen
+  {
+    for(int K=0; k<n; k++) //Spalten
+    {
+    	for(int j=0; j<n; j++) 
+    	{
+    	  C[i][k] += A[i][j] * B[j][k];
+    	}
+    }
+  }
+}
 
 
 // addition of matrices
+void add_matrix(double** A, double** B, int m, int n)
+{
+  double** C=init_matrix(m, n);
+  
+  for(int i=0; i<m; i++) //Zeilen
+  {
+    for(int j=0; j<n; j++) //Spalten
+      {
+  	  C[i][j] = A[i][j] + B[i][j];
+      }
+  }
+}
+
+
+
+}
