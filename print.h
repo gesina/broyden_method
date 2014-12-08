@@ -60,7 +60,7 @@ void print_matrix(double** A, int dim)
       //columns
       for(int j=0; j<dim; j++)
 	{
-	  printf("  %6.3f  ", *(*(A+i)+j)); // simple print: total 3 numbers, 1 after comma
+	  printf("  %6.3f  ", *(*(A+i)+j)); // simple print: total 6 numbers, 3 after comma
 	}
       printf("\n");  // begin new row
     }
