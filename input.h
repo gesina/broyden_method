@@ -34,13 +34,14 @@ char get_yesno()  // ask user for input of yes or no
 {
   _Bool b=1;
   char c=' ';
-  printf("\n Please enter yes (y) or no (n):  ");
+  printf(" Please enter yes (y) or no (n):  ");
    do
     {
-      while(getchar()!='\n');  // necessary to avoid reading newline
+      // while(getchar()!='\n');  // necessary to avoid reading newline
       scanf("%c", &c);                             // get user input
       if ( c=='y' || c=='n' ) {b=0;}              // ok --> quit
-      else { printf("\nPlease enter y or n :  "); }     // not ok --> repeat
+      else if (c=='\n') {b=1;}                    // newline --> again
+      else { printf("Please enter y or n :  "); }     // not ok --> repeat
     }
   while(b);
 
@@ -53,17 +54,19 @@ char get_function()  // ask user for input of yes or no
 {
   _Bool b=1;
   char c=' ';
-  printf("\n Please enter one of the following%s:  ", FUNCTION_OPTIONS_PRINT);
+  printf("\nPlease enter one of the following%s:  ", FUNCTION_OPTIONS_PRINT);
   do
     {
-      while(getchar()!='\n');  // necessary to avoid reading newline
+      //while(getchar()!='\n');  // necessary to avoid reading newline
       scanf("%c", &c);                             // get user input
       // check, whether input is in FUNCTION_OPTIONS-string
       if ( strchr(FUNCTION_OPTIONS, c) != NULL ) {
 	printf("You entered option %c. Take it?\n", c);
-	b=0;} // input ok --> quit
+	if(get_yesno()=='y'){b=0;}
+      }// input ok and wanted--> quit
+      else if( c=='\n' ){b=1;}
       else {
-	printf("\nPlease enter only one of the following %s: ", FUNCTION_OPTIONS_PRINT);
+	printf("Please enter only one of the following %s: ", FUNCTION_OPTIONS_PRINT);
       }// not ok --> repeat
       
     }
@@ -90,11 +93,17 @@ double get_tolerance()  // gets the convergence tolerance
       if ( tol <= 0 )
 	{
 	  b=1;   // repeat if senseless ...
-	  printf("\n  Please enter a dimension greater than zero!");
-	  printf("\n  Your input: %f", tol);
-	  printf("\nTry again:  "); // ... and give some warning
-	};
-
+	  printf("\n  Please enter a tolerance greater than zero!\n");
+	  printf("   Your input: %f\n", tol);
+	  printf("Try again:  "); // ... and give some warning
+	}
+      else {
+	printf("You entered for tolerance %f. Take it?\n", tol);
+	if(get_yesno()!='y'){
+	  printf("Then try again: ");
+	  b=1;
+	}
+      }
     }
   while(b);
 
@@ -103,6 +112,33 @@ double get_tolerance()  // gets the convergence tolerance
 }
 
 
+int get_maxit()  // gets maximum number of iteration steps
+{
+
+  int maxit = -1; // number of steps to return
+  _Bool b=0;     // test bool for while-loop
+
+  
+  printf("\nPlease enter the maximum number of iteration steps:  ");
+  do  // as long as input doesn't make sense: repeat
+    {
+      b=0; // stop if not set to 1
+      scanf("%d", &maxit); // user read in
+
+      // verify input
+      if ( maxit <= 0 )
+	{
+	  b=1;   // repeat if senseless
+	  printf("  Please enter a maximum number of iterations greater than zero!\n");
+	  printf("   Your input: %i\n", maxit);
+	  printf("Try again:  "); // and give some warning
+	};
+
+    }
+  while(b);
+
+  return maxit;
+}
 
  
 void set_matrix(double** A, int m, int n) // gets+sets matrix entries from user (A)
@@ -112,34 +148,34 @@ void set_matrix(double** A, int m, int n) // gets+sets matrix entries from user 
   char c=' ';     // helper character
 
   printf("\nDimension for set_matrix: %i x %i\n" , m, n);
-  printf("Please enter the matrix entries separately.");
+  printf("Please enter the matrix entries separately.\n");
   do  // as long as input doesn't make sense: repeat
     {
       b=1; // stop default
       
       for (int i=0; i<m; i++)
 	{
-	  printf("\n Enter row #%i:\n", i+1);
+	  printf(" Enter row #%i:\n", i+1);
 
 	  // read entries in
 	  for ( int j=0; j<n; j++)
 	    {
-	      while(getchar()!='\n');  // necessary to avoid reading newline
-	      scanf("%lf", (*(A+i)+j)); // user read in
+	      //while(getchar()!='\n');  // necessary to avoid reading newline
+	      scanf("%lf", &A[i][j]); // user read in
 	    }
 	  
 	  // show full row:
 	  printf("Row #%i: ", i+1);
 	  for (int k=0; k<n; k++)
 	    {
-	      printf(" | %f", *(*(A+i)+k));
+	      printf(" | %f", &A[i][k]);
 	    }
 	}
 
       // ask, wether to continue or to try again  
       printf("\nYour entries have produced this matrix:\n");
       print_matrix(A, m,n);
-      printf("Take these entries?");
+      printf("Take these entries?\n");
       
       c = get_yesno();
       if ( c=='y' ) { b=0;}
@@ -156,7 +192,7 @@ void set_vector(double* b, int dim) // gets+sets vector entries from user (b)
   _Bool g=0;     // test bool for while-loop
   char c=' ';     // helper character
 
-  printf("\n\nPlease enter the entries of the vector: \n");
+  printf("\nPlease enter the entries of the vector: \n");
   do  // as long as input doesn't make sense: repeat
     {
       
@@ -165,8 +201,8 @@ void set_vector(double* b, int dim) // gets+sets vector entries from user (b)
       // read entries in
       for ( int i=0; i<dim; i++)
 	{
-	  while(getchar()!='\n');  // necessary to avoid reading newline
-	  scanf("%lf", (b+i)); // user read in
+	  //while(getchar()!='\n');  // necessary to avoid reading newline
+	  scanf("%lf", &b[i]); // user read in
 	}
 	 
       // ask, wether to continue or to try again  
@@ -176,7 +212,7 @@ void set_vector(double* b, int dim) // gets+sets vector entries from user (b)
       
       c = get_yesno();
       if ( c=='y' ) { g=0;}
-      else {printf("\n Try again and enter the vector:\n");}
+      else {printf("\nTry again and enter the vector:\n");}
       
     }
   while(g);

@@ -30,33 +30,24 @@
 
 // LINEAR
 // f(x) = x-1
-double* linear(double* arg)
+void linear(double* arg, double* res)
 {
-  *arg = *arg-1;
-  return arg;
+  *res = *arg-1;
 }
 
 // EXAMPLE_II
 // f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}
-double* example_ii(double* arg)
+void example_ii(double* arg,double* res)
 {
-  double* y=init_vector(2);
-  
-  y[0]=(arg[0]+3) * (pow(arg[1],3) -7)+18;
-  y[1]= sin(arg[1] * exp(arg[0]) -1);
-
-  return y;
+  res[0]=(arg[0]+3) * (pow(arg[1],3) -7)+18;
+  res[1]= sin(arg[1] * exp(arg[0]) -1);
 }
 
 // EXAMPLE_III
 // f(x) = {{x1+x2-3},{x1^2+x2^2-9}}
-double* example_iii(double* arg)
+void example_iii(double* arg, double* res)
 {
-  double* y=init_vector(2);
-
-  y[0]=arg[0]+arg[1]-3;
-  y[1]=pow(arg[0],2)+pow(arg[1],2)-9;
-
-  return y;
+  res[0]=arg[0]+arg[1]-3;
+  res[1]=pow(arg[0],2)+pow(arg[1],2)-9;
 }
 

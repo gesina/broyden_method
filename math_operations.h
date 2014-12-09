@@ -34,13 +34,14 @@
 // copy function for matrices
 void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
 {
+  //printf("in copymatrix with A:%f, B:%f, m:%i, n:%i",**A,**B,m,n);
   // rows
   for (int i=0; i<m; i++)
     {
       //columns
       for ( int j=0; j<n; j++)
 	{
-	  *(*(B+i)+j) = *(*(A+i)+j);
+	  B[i][j] = A[i][j];
 	}
     };
 }
@@ -94,3 +95,18 @@ double** add_matrix(double** A, double** B, int m, int n)
 
   return C;
 }
+
+
+
+// norm of vectors (l_2-norm)
+double norm_vector(double* x, int dim)
+{
+  double norm=0;
+  for(int i=0; i<dim; i++)
+    {
+      norm += pow(x[i],2);
+    }
+  norm=sqrt(norm);
+  return norm;
+}
+

@@ -36,20 +36,20 @@ int lu_decomposition(double** A, int* pi, int dim)
 
   double max_entry=0, next_entry=0;
   int temp_pi=0;
-  double* temp_a=0;
+  double* temp_a=NULL;
   
   for (int k=0; k<dim-1; k++)
     {
       // Pivoting
       //---------------------------------
       // find maximum absolute value of entries
-      max_entry= fabs(*(*(A+k)+k));      // set max to abs. value
+      max_entry= fabs(A[k][k]);      // set max to abs. value
                                          // of entry #k in row #k
       int pos_max_entry=k;
       
       for (int i=k+1; i<dim; i++)
 	{
-	  next_entry=fabs(*(*(A+i)+k));  // get next abs. entry
+	  next_entry=fabs(A[i][k]);  // get next abs. entry
 	  
 	  if(max_entry < next_entry)     // and if greater ...
 	    {
@@ -63,9 +63,9 @@ int lu_decomposition(double** A, int* pi, int dim)
       pi[k]=pi[pos_max_entry];
       pi[pos_max_entry]=temp_pi; 
 
-      temp_a = *(A+k);                       // in A
-      *(A+k)=*(A+pos_max_entry);
-      *(A+pos_max_entry)=temp_a;
+      temp_a = A[k];                       // in A
+      A[k]=A[pos_max_entry];
+      A[pos_max_entry]=temp_a;
 
 
       // LU Decomposition
@@ -81,19 +81,19 @@ int lu_decomposition(double** A, int* pi, int dim)
 	{
 	  // L
 	  // l_{ik} = a_{ik}/a_{kk}
-	  *(*(A+i)+k) = (*(*(A+i)+k))/ (*(*(A+k)+k));
+	  A[i][k] = A[i][k]/ A[k][k];
 	  for (int j=k+1; j<dim; j++)
 	    {
 	      // R
 	      // a_{ij} = a_{ij} - l_{ik}*a_{ki}
-	      *(*(A+i)+j) = *(*(A+i)+j) - ( (*(*(A+i)+k)) * (*(*(A+k)+j)) );
+	      A[i][j] = A[i][j] - ( A[i][k] * A[j][k] );
 	    }
 	}
     }
 
 
   // last check on singularity:
-  if ( fabs(*(*(A+dim-1)+dim-1)) <= DBL_EPSILON ) // last pivot element zero?
+  if ( fabs(A[dim-1][dim-1]) <= DBL_EPSILON ) // last pivot element zero?
     {  return dim; } // return last step failed
 
   return 0; // finished and worked well
@@ -125,7 +125,7 @@ void forward_substitution(double* b, int* pi, double** L, int dim)
       for (int i=k+1; i<dim; i++)
 	{
 	  // b_{i} = b_{i} - l_{ik}*b_{k}
-	  *(b+i) = *(b+i) - ( (*(*(L+i)+k)) * (*(b+k)) );
+	  b[i] = b[i] - ( L[i][k] * b[k]);
 	}
     }
 }
@@ -143,17 +143,17 @@ void backward_substitution(double** U, double* z, double* x, int dim)
   for (int k=dim-1; k>=0; k--)
     {
       // x_{k} = z_{k}
-      *(x+k) = *(z+k);
+      x[k] = z[k];
 
       // for j=k+1, ..., n
       for (int j=k+1; j<dim; j++)
 	{
 	  // x_{k} = x_{k}-r_{kj}x_{j}
-	  *(x+k) = *(x+k) - (*(*(U+k)+j)) * (*(x+j));
+	  x[k] = x[k] - U[k][j] * x[j];
 	}
 
       // x_{k} = x_{k}/r_{kk}
-      *(x+k) = (*(x+k)) /  (*(*(U+k)+k));
+      x[k] = x[k] /  U[k][k];
     }
 }
 
@@ -163,7 +163,7 @@ void backward_substitution(double** U, double* z, double* x, int dim)
 //   (init of LU, pi)
 // and returns struct with LU, pi, step
 int solve_equation(double** A, double* b, int dimension, double* x)
-{ 
+{
   // init of permutation vector pi
   int* pi= (int*) malloc(dimension*sizeof(int));
   if ( pi == NULL )   // error with allociation?
@@ -172,17 +172,17 @@ int solve_equation(double** A, double* b, int dimension, double* x)
       printf("Problem occured with init of permutation vector.");
       return -1;  // return: allociation error
     };
-  
   // write entries of permutation vector
-  for (int i=0; i<dimension; i++){ *(pi+i) = i;}
-
+  for (int i=0; i<dimension; i++){ pi[i] = i;}
 
   // init of LU matrix
   double** LU = init_matrix(dimension, dimension);
   if (!LU)            // error with allociation?
     { return -1; }  // return: allociation error
   copy_matrix(A, LU, dimension, dimension);
-
+  // rows
+  printf("solving with A: %f, LU: %f\n", **A, **LU);
+  
   // backup of b
   double* z= init_vector(dimension);
   copy_vector(z, b, dimension);
@@ -198,9 +198,14 @@ int solve_equation(double** A, double* b, int dimension, double* x)
     }
 
   // substitutions
-  forward_substitution(z, pi, LU, dimension);
-  backward_substitution(LU,z, x, dimension);
-  
+  forward_substitution(z, pi, LU, dimension); 
+  backward_substitution(LU,z, x, dimension); 
+
+
+  free(LU);
+  free(pi);
+  free(z);
+
   return 0;  // return step
   
 }
