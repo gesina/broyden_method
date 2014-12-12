@@ -139,7 +139,7 @@ int main(void)
   // BROYDEN'S METHOD
   //--------------------------------------------------
   
-  printf("\n\nNow we will start iterating the zero of ...");
+  printf("\n\nStarting to iterate ...");
 
   // TESTS
   // LU decomposition test
@@ -170,20 +170,20 @@ int main(void)
   struct x_f_step_flag result = broyden_method(function,dimension,x,B,maxit,tolerance);
   
   // check on success
-  if(result.flag==-1){  // allociation?
+  if(result.flag==-1){       // allociation error?
     printf("Sorry, had to break!\n\n"); print_exit(); return 2;
-  } 
-  if(result.flag==1){   // more steps?
+  }
+  else if(result.flag==1){   // more steps?
     printf("\n(More iteration steps would have been needed!!)\n");
   }
+  else if(result.flag==2){   // LU decomposition failed?
+    printf("LU decomposition failed at step %d!!\n", result.step);
+  }
   
-  printf("\n\nSOLUTION:\n");
+  printf("\nSOLUTION after %i steps:\n", result.step-1);
   printf("***********************************************************\n");
   print_vector(result.x, dimension);            // print results
 
-  //printf("%f", *result.x);
-
-  
   // last but not least:
   free_memory_matrix(B, dimension, dimension);
   free_memory_vector(x);

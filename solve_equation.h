@@ -181,7 +181,7 @@ int solve_equation(double** A, double* b, int dimension, double* x)
     { return -1; }  // return: allociation error
   copy_matrix(A, LU, dimension, dimension);
   // rows
-  printf("solving with A: %f, LU: %f\n", **A, **LU);
+  // DEBUGGING printf("solving with A: %f, LU: %f\n", **A, **LU);
   
   // backup of b
   double* z= init_vector(dimension);
@@ -192,10 +192,7 @@ int solve_equation(double** A, double* b, int dimension, double* x)
   //  step>0: failed on step number step)
   int step=lu_decomposition(LU, pi, dimension);
   if( step>0 ) // worked?
-    {
-      printf("LU decomposition failed at step %d", step);
-      return step;
-    }
+    { return step; }
 
   // substitutions
   forward_substitution(z, pi, LU, dimension); 

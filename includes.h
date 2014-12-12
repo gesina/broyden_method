@@ -57,7 +57,7 @@ struct x_f_step_flag
   double* x;      // x_k for max. k
   double* f;      // f(x_k) 
   int step;       // k
-  _Bool flag;     // success indicator:
+  int flag;     // success indicator:
                   // (1) maximal iteration step input not enough
                   // (0) successful iteration within tolerance
 };
