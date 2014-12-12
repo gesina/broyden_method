@@ -76,7 +76,7 @@ _Bool ex_ii_predef_x1(double** x, double*** B, double* tol, int* maxit)
   *tol=0.0000000001;
 
   // set maxit
-  *maxit=10;
+  *maxit=50;
   
   // output for user
   printf("You chose the predefined values:\n");

@@ -35,7 +35,7 @@ int lu_decomposition(double** A, int* pi, int dim)
   //for (int i=0; i<dim; i++){ *(pi+i) = i;}
 
   double max_entry=0, next_entry=0;
-  int temp_pi=0;
+  int temp_pi=NULL;
   double* temp_a=NULL;
   
   for (int k=0; k<dim-1; k++)
@@ -86,7 +86,7 @@ int lu_decomposition(double** A, int* pi, int dim)
 	    {
 	      // R
 	      // a_{ij} = a_{ij} - l_{ik}*a_{ki}
-	      A[i][j] = A[i][j] - ( A[i][k] * A[j][k] );
+	      A[i][j] = A[i][j] - ( A[i][k] * A[k][j] );
 	    }
 	}
     }
