@@ -1,15 +1,17 @@
-#ifndef BROYDENMETHOD
-#define BROYDENMETHOD
+#ifndef BROYDENOUTPUT
+#define BROYDENOUTPUT
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: broyden_method.h                         */
+/*   FILE: print.h                                  */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
-/*    BROYDEN METHOD                                */
+/*    LU-DECOMPOSITION WITH PIVOTING                */
+/*      and                                         */
+/*    SOLVING OF A LINEAR EQUATION SYSTEM           */
 /*                                                  */
-/*   Excercise #45 for the lecture                  */
+/*   Excercise #20 for the lecture                  */
 /*   NUMERICAL MATHEMATICS in 2014/15               */
 /*   by Prof. Dr. Blank                             */
 /*   University of Regensburg                       */
@@ -22,27 +24,25 @@
 /* ************************************************ */
 
 
-
 //---------------------------------------------------
 //
-//     Broyden's method
+//  All output functions
 //
 //---------------------------------------------------
 
 
 
-// struct for return data of broyden_method()
-struct x_f_step_flag
-{
-  double* x;      // x_k for max. k
-  double* f;      // f(x_k) 
-  int step;       // k
-  int flag;     // success indicator:
-                  // (1) maximal iteration step input not enough
-                  // (0) successful iteration within tolerance
-};
+// greetings +  instructions
+void print_init();
 
-struct x_f_step_flag broyden_method(void (*function)(double*,double*), int, double*, double**, int, double);
+// bye bye
+void print_exit();
+
+// matrix
+void print_matrix(double**, int, int);
+
+// vector
+void print_vector(double*, int);
 
 
 #endif

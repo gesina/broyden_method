@@ -28,16 +28,17 @@
 //
 //---------------------------------------------------
 
-
+#include<stdio.h>            // printf(), scanf()
+#include"broyden_output.h"   // Broyden's method
 
 // greetings +  instructions
 void print_init()
 {
   printf("\n****************************************************");
   printf("\n*                                                  *");
-  printf("\n*    LU-DECOMPOSITION WITH PIVOTING                *");
-  printf("\n*                 and                              *");
-  printf("\n*    SOLVING OF A LINEAR EQUATION SYSTEM           *");
+  printf("\n*     ITERATION of a function's ZERO               *");
+  printf("\n*                   with                           *");
+  printf("\n*             BROYDEN'S METHOD                     *");
   printf("\n*                                                  *");
   printf("\n****************************************************\n");
 };

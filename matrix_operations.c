@@ -1,7 +1,7 @@
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: math_operations.h                        */
+/*   FILE: matrix_operations.c                      */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
@@ -27,10 +27,88 @@
 //
 //---------------------------------------------------
 
+#include <stdio.h>             // printf, scanf
+#include <stdlib.h>            // malloc
+#include <math.h>              // pow, exp, sin
+#include "matrix_operations.h"
 
 
 
+// MEMORY MANAGEMENT
 
+// allocation functions
+ double** init_matrix(int m, int n)
+{
+  // allocate space for matrix row-pointer
+  double** matrix = (double**) malloc(m*sizeof(double*));
+  
+  // got space in memory?
+  if ( matrix == NULL )
+    {
+      printf("\nError allociating space in memory for the matrix!\n");
+      printf("Problem occured with init of A\n");
+      return NULL; // exit
+    }
+
+  // allocate space for matrix rows 
+  for ( int i=0; i<m; i++)
+    {
+      // and for entries in rows
+      matrix[i] = (double*) malloc(n*sizeof(double));
+
+      // got space in memory?
+      if(matrix[i] == NULL)
+	{
+	  printf("\nError allociating space in memory for the matrix!\n");
+	  printf("Problem occured with row: A[%d]\n", i);
+	  return NULL; // exit
+	}
+    }
+
+  return matrix;
+  
+};
+
+
+double* init_vector(int dim) // allocates memory for vector
+{
+  // allocate space for vector
+  double* vector = (double*) malloc(dim*sizeof(double));
+  
+  // got space in memory?
+  if ( vector == NULL )
+    {
+      printf("\nError allociating space in memory for the vector!\n");
+      printf("Problem occured with init of vector.\n");
+      return NULL; // exit
+    }
+
+  return vector;
+  
+};
+
+
+
+// memory free functions
+void free_memory_matrix(double** A, int m, int n)     // free memory from matrix
+{
+  // free rows
+  for (int i=0; i<m; i++)
+    {
+      free(A[i]);
+    }
+  free(A);
+}
+
+
+void free_memory_vector(void* x)                 // free memory from vector
+{
+    free(x);
+}
+
+
+
+// COPY FUNCTIONS
 // copy function for matrices
 void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
 {
@@ -47,7 +125,6 @@ void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
 }
 
 
-
 // copy function for vectors
 void copy_vector(double* a, double* b ,int dim) // copy vector a into b
 {
@@ -58,11 +135,12 @@ void copy_vector(double* a, double* b ,int dim) // copy vector a into b
 }
 
 
+
+// MATRIX MATHS
 // multiplication of matrices
 double** mult_matrix(double** A, double** B, int m, int n, int l)
 //m Zeilen von A, n Spalten von A und Zeilen von B, l Spalten von B
 {
-  printf("\nm is %i, n is %i, k is %i\n",m,n,l);
   double** C=init_matrix(m, l);
   
   for(int i=0; i<m; i++) //Zeilen
@@ -109,4 +187,3 @@ double norm_vector(double* x, int dim)
   norm=sqrt(norm);
   return norm;
 }
-

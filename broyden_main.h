@@ -1,9 +1,9 @@
-#ifndef BROYDENFUNCTIONS
-#define BROYDENFUNCTIONS
+#ifndef BROYDENMAIN
+#define BROYDENMAIN
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: functions.h                              */
+/*   FILE: broyden_main.h                           */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
@@ -25,38 +25,20 @@
 
 //---------------------------------------------------
 //
-//  Functions to get the zero of
+//  Main executive file for implementation of
+//     Broyden's method
 //
 //---------------------------------------------------
 
-// function ids:
-/*  (1) linear(): 0.5*x
-    (2) example_ii(): f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}
-    (3) example_iii(): f(x) = {{x1+x2-3},{x1^2+x2^2-9}}
-*/
-#define LINEAR "f(x)=x-1\n"
-#define EXAMPLE_II "f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}\n"
-#define EXAMPLE_III "f(x) = {{x1+x2-3},{x1^2+x2^2-9}}\n"
+// main function
+int main(void);
 
-// LINEAR
-// f(x) = x-1
-void linear(double*, double*);
+// ERROR CODES:
+//  4: file error, opening/creation failed
+//  3: tolerance error, tolerance after user input lower 0
+//  2: allociation error, malloc() didn't work
+//  1: matrix not decomposable
+//  0: exited normally
 
-// EXAMPLE_II
-// f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}
-void example_ii(double*,double*);
-
-// EXAMPLE_III
-// f(x) = {{x1+x2-3},{x1^2+x2^2-9}}
-void example_iii(double*, double*);
-
-// PREDEFINITIONS
-_Bool ex_ii_predef_x1(double**, double***, double*, int*);
-    
-_Bool ex_ii_predef_x2(double**, double***, double*, int*);
-
-_Bool ex_iii_predef_B1(double**, double***, double*, int*);
-
-_Bool ex_iii_predef_B2(double**, double***, double*, int*);
 
 #endif

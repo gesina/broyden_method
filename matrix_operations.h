@@ -1,9 +1,9 @@
-#ifndef BROYDENFUNCTIONS
-#define BROYDENFUNCTIONS
+#ifndef MATRIXOPERATIONS
+#define MATRIXOPERATIONS
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: functions.h                              */
+/*   FILE: matrix_operations.h                      */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
@@ -25,38 +25,40 @@
 
 //---------------------------------------------------
 //
-//  Functions to get the zero of
+//   Matrix math operations
 //
 //---------------------------------------------------
 
-// function ids:
-/*  (1) linear(): 0.5*x
-    (2) example_ii(): f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}
-    (3) example_iii(): f(x) = {{x1+x2-3},{x1^2+x2^2-9}}
-*/
-#define LINEAR "f(x)=x-1\n"
-#define EXAMPLE_II "f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}\n"
-#define EXAMPLE_III "f(x) = {{x1+x2-3},{x1^2+x2^2-9}}\n"
 
-// LINEAR
-// f(x) = x-1
-void linear(double*, double*);
+// MEMORY MANAGEMENT
+// allocates memory for matrix
+double** init_matrix(int m, int n);
 
-// EXAMPLE_II
-// f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}
-void example_ii(double*,double*);
+// allocates memory for vector
+double* init_vector(int);
 
-// EXAMPLE_III
-// f(x) = {{x1+x2-3},{x1^2+x2^2-9}}
-void example_iii(double*, double*);
+// free memory from matrix
+void free_memory_matrix(double**, int, int);
 
-// PREDEFINITIONS
-_Bool ex_ii_predef_x1(double**, double***, double*, int*);
-    
-_Bool ex_ii_predef_x2(double**, double***, double*, int*);
+// free memory from vector
+void free_memory_vector(void*);
 
-_Bool ex_iii_predef_B1(double**, double***, double*, int*);
+// COPY FUNCTIONS
+// copy matrix A into B
+void copy_matrix(double**, double**,int, int);
 
-_Bool ex_iii_predef_B2(double**, double***, double*, int*);
+// copy vector a into b
+void copy_vector(double*, double*,int);
+
+// MATRIX MATHS
+// multiplication of matrices
+// A mxn-matrix, B nxl-matrix
+double** mult_matrix(double**, double**, int, int, int);
+
+// addition of matrices
+double** add_matrix(double**, double**, int, int);
+
+// norm of vectors (l_2-norm)
+double norm_vector(double*, int);
 
 #endif

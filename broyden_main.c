@@ -29,9 +29,15 @@
 //---------------------------------------------------
 
 
-// include all needed libraries and predefinitions
-#include "includes.h"
+#include <stdio.h>
 
+#include "broyden_main.h"
+#include "broyden_input.h"
+#include "broyden_output.h"
+#include "broyden_method.h"
+#include "broyden_functions.h"
+#include "matrix_operations.h"
+#include "broyden_file.h"
 
 // main function
 int main(void)
@@ -48,7 +54,7 @@ int main(void)
   
   int dimension=-1;
   int maxit=-1;
-  double tol=-1;
+  double tolerance=-1;
   
   void (*function)(double*, double*);
   // get function
@@ -71,10 +77,10 @@ int main(void)
       if(!x){return 2;}
       printf("Take first one? (y=first, n=second)\n");
       if(get_yesno()=='y'){
-	if(!ex_ii_predef_x1(&x,&B,&tol,&maxit)){return 2;}
+	if(!ex_ii_predef_x1(&x,&B,&tolerance,&maxit)){return 2;}
       }
       else {
-	if(!ex_ii_predef_x2(&x,&B,&tol,&maxit)){return 2;}	
+	if(!ex_ii_predef_x2(&x,&B,&tolerance,&maxit)){return 2;}	
       }
     }
     break;
@@ -89,11 +95,11 @@ int main(void)
       if(!x){return 2;}
       printf("Take first one? (y=first, n=second)\n");
       if(get_yesno()=='y'){
-	if(!ex_iii_predef_B1(&x,&B,&tol,&maxit)){return 2;};
+	if(!ex_iii_predef_B1(&x,&B,&tolerance,&maxit)){return 2;};
 	print_matrix(B, dimension, dimension);
       }
       else {
-	if(!ex_iii_predef_B2(&x,&B,&tol,&maxit)){return 2;};
+	if(!ex_iii_predef_B2(&x,&B,&tolerance,&maxit)){return 2;};
       }
     }
     break;
@@ -102,9 +108,7 @@ int main(void)
     dimension=1;
   }
 
-  //for LU decomposition test
-  /* dimension=get_tolerance();*/
-  
+
   // GET VALUES (if not predefined chosen)
   if(!only_predef)
     {
@@ -135,35 +139,14 @@ int main(void)
       //int maxit=20;
     }
 
+  // init the output file and return if it failes
   if(!init_file()){return 4;}
+
+
   // BROYDEN'S METHOD
   //--------------------------------------------------
   
   printf("\n\nStarting to iterate ...");
-
-  // TESTS
-  // LU decomposition test
-  /* double* z= init_vector(dimension); */
-  /* printf("Number of steps: %d", solve_equation(B, x, dimension, z)); */
-
-  // test of example_ii(i)
-  /* print_vector(x, dimension); */
-  /* double* z= function(x, dimension); */
-  /* print_vector(x, dimension); */
-
-  // test of matrix operations
-  /* int m,n; */
-  /* printf("\nm: "); */
-  /* m=get_tolerance(); */
-  /* printf("\nn: "); */
-  /* n=get_tolerance(); */
-  /* printf("\nmatrix A: "); */
-  /* double** A = init_matrix(n,m); set_matrix(A, m,n); */
-  /* double** B = init_matrix(n,m); set_matrix(B,m,n); */
-
-  /* print_matrix(add_matrix(A,B,m,n),m,n); */
-
-  /* function(x,x); */
 
   if(x){print_vector(x,dimension);}
   else{ printf("x not set, breaking\n"); return 2;}
@@ -180,9 +163,9 @@ int main(void)
     printf("LU decomposition failed at step %d!!\n", result.step);
   }
   
-  printf("\nSOLUTION after %i steps:\n", result.step-1);
+  printf("\nSOLUTION after %i steps:\n", result.step);
   printf("***********************************************************\n");
-  print_vector(result.x, dimension);            // print results
+  print_vector(result.x, dimension);    // print results
 
   // last but not least:
   free_memory_matrix(B, dimension, dimension);
