@@ -63,6 +63,8 @@ struct x_f_step_flag broyden_method(void (*function)(double*,double*), int dim, 
     // p=-[B_k]^(-1)*f(x_k)
     if(solve_equation(B, f, dim, p)){break;}; // p = [B_k]^(-1) * f(x_k)
     for(int i=0;i<dim;i++){p[i]=-p[i];} // p=-p
+    printf("--- p:\n");
+    print_vector(p, dim);
     
     // x_(k+1)=x_k+p_k
     for(int i=0;i<dim;i++){x_[i]= x[i]+p[i];}
@@ -111,7 +113,8 @@ struct x_f_step_flag broyden_method(void (*function)(double*,double*), int dim, 
       printf("f(x_(k+1))=%f\n", *f_);
       printf("p_k=%f\n",*p);
       printf("normp:%f\n", normp);
-      printf("B:%f\n",**B);
+      //printf("B:%f\n",**B);
+      print_matrix(B, dim, dim);
       
       printf("for file:\n");
       //printf("k:%i, |f(x_k)|:%f, |x_(k+1)-x_k|:%f, conv:%f\n",k,normf_,normxx_,conv);

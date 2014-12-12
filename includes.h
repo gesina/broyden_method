@@ -107,9 +107,13 @@ void linear(double* arg, double* res);
 
 #define EXAMPLE_II "f(x) = {{(x1+3)(x2^2-7)+18},{sin(x2*exp(x1)-1}}\n"
 void example_ii(double* arg, double* res);
+_Bool ex_ii_predef_x1(double** x, double*** B, double* tol, int* maxit);
+_Bool ex_ii_predef_x2(double** x, double*** B, double* tol, int* maxit);
 
 #define EXAMPLE_III "f(x) = {{x1+x2-3},{x1^2+x2^2-9}}\n"
 void example_iii(double* arg, double* res);
+_Bool ex_iii_predef_B1(double** x, double*** B, double* tol, int* maxit);
+_Bool ex_iii_predef_B2(double** x, double*** B, double* tol, int* maxit);
 
 
 // FILE MANAGEMENT
@@ -122,12 +126,12 @@ struct x_f_step_flag broyden_method(void (*function)(double*,double*), int dim, 
 // return values: 
 
 // HOMEMADE LIBRARIES
-#include "print.h"              // print & error functions
-#include "input.h"              // init, free & copy functions 
+#include "broyden_print.h"              // print & error functions
+#include "broyden_input.h"              // init, free & copy functions 
 #include "math_operations.h"    // matrix math operations
 #include "solve_equation.h"     // LU_decomposition for Ax=b
-#include "functions.h"          // function options
-#include "file_management.h"    // printing into and out from file
+#include "broyden_functions.h"          // function options
+#include "broyden_file.h"    // printing into and out from file
 #include "broyden_method.h"     // Broyden's method
 
 // ERROR CODES:
