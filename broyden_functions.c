@@ -27,8 +27,8 @@
 //
 //---------------------------------------------------
 
-#include <stdio.h>
-#include <math.h>
+#include <stdio.h>   // printf()
+#include <math.h>    // pow(), exp(), sin()
 
 #include "broyden_functions.h"
 #include "matrix_operations.h"
@@ -59,22 +59,22 @@ void example_iii(double* arg, double* res) {
 
 // PREDEFINITIONS
 _Bool ex_ii_predef_x1(double** x, double*** B, double* tol, int* maxit) {
-  *x=init_vector(2); // init x_0
-  if(!*x){return 0;}
+  *x=init_vector(2);    // init x_0
+  if(!*x){return 1;}
   *B=init_matrix(2,2);  // init B_0
-  if(!*B){return 0;}
+  if(!*B){return 1;}
 
   // set x
   (*x)[0]=-0.5;
   (*x)[1]=1.4;
 
-  // set B to
+  // set B
   (*B)[0][0]=-4.256;
   (*B)[0][1]=-20.58;
   (*B)[1][0]=0.839499;
   (*B)[1][1]=0.599642;
 
-  // set tol
+  // set tol to 10^(-10)
   *tol=0.0000000001;
 
   // set maxit
@@ -82,24 +82,22 @@ _Bool ex_ii_predef_x1(double** x, double*** B, double* tol, int* maxit) {
   
   // output for user
   printf("You chose the predefined values:\n");
-  printf("  Starting point x_0\n");
+  printf("  Starting point x_0:\n");
   print_vector(*x, 2);
-  printf("  Starting differential B_0\n");
+  printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
   printf("  Tolerance:  %f\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
-  return 1;
+  return 0;
 }
 
 
-    
-// PREDEFINITIONS
 _Bool ex_ii_predef_x2(double** x, double*** B, double* tol, int* maxit) {
-  *x=init_vector(2); // init x_0
-  if(!*x){return 0;}
+  *x=init_vector(2);    // init x_0
+  if(!*x){return 1;}
   *B=init_matrix(2,2);  // init B_0
-  if(!*B){return 0;}
+  if(!*B){return 1;}
 
   // set x
   (*x)[0]=-0.14;
@@ -119,22 +117,22 @@ _Bool ex_ii_predef_x2(double** x, double*** B, double* tol, int* maxit) {
 
   // output for user
   printf("You chose the predefined values:\n");
-  printf("  Starting point x_0\n");
+  printf("  Starting point x_0:\n");
   print_vector(*x, 2);
-  printf("  Starting differential B_0\n");
+  printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
   printf("  Tolerance:  %f\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
-  return 1;
+  return 0;
 }
 
 
 _Bool ex_iii_predef_B1(double**x, double*** B, double* tol, int* maxit) {
-  *x=init_vector(2); // init x_0
-  if(!*x){return 0;}
+  *x=init_vector(2);    // init x_0
+  if(!*x){return 1;}
   *B=init_matrix(2,2);  // init B_0
-  if(!*B){return 0;}
+  if(!*B){return 1;}
 
   // set x
   (*x)[0]=0;
@@ -154,21 +152,22 @@ _Bool ex_iii_predef_B1(double**x, double*** B, double* tol, int* maxit) {
 
   // output for user
   printf("You chose the predefined values:\n");
-  printf("  Starting point x_0\n");
+  printf("  Starting point x_0:\n");
   print_vector(*x, 2);
-  printf("  Starting differential B_0\n");
+  printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
   printf("  Tolerance:  %f\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
-  return 1;
+  return 0;
 }
 
+
 _Bool ex_iii_predef_B2(double** x, double*** B, double* tol, int* maxit) {
-  *x=init_vector(2); // init x_0
-  if(!*x){return 0;}
+  *x=init_vector(2);    // init x_0
+  if(!*x){return 1;}
   *B=init_matrix(2,2);  // init B_0
-  if(!*B){return 0;}
+  if(!*B){return 1;}
 
   // set x
   (*x)[0]=0;
@@ -188,12 +187,12 @@ _Bool ex_iii_predef_B2(double** x, double*** B, double* tol, int* maxit) {
 
   // output for user
   printf("You chose the predefined values:\n");
-  printf("  Starting point x_0\n");
+  printf("  Starting point x_0:\n");
   print_vector(*x, 2);
-  printf("  Starting differential B_0\n");
+  printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
   printf("  Tolerance:  %f\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
-  return 1;
+  return 0;
 }

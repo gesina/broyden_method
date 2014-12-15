@@ -3,15 +3,13 @@
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: print.h                                  */
+/*   FILE: broyden_output.h                         */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
-/*    LU-DECOMPOSITION WITH PIVOTING                */
-/*      and                                         */
-/*    SOLVING OF A LINEAR EQUATION SYSTEM           */
+/*    BROYDEN METHOD                                */
 /*                                                  */
-/*   Excercise #20 for the lecture                  */
+/*   Excercise #45 for the lecture                  */
 /*   NUMERICAL MATHEMATICS in 2014/15               */
 /*   by Prof. Dr. Blank                             */
 /*   University of Regensburg                       */
@@ -31,6 +29,7 @@
 //---------------------------------------------------
 
 
+#define MATRIX_ENTRY "\t%16.12f"
 
 // greetings +  instructions
 void print_init();

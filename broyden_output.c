@@ -1,15 +1,13 @@
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: print.h                                  */
+/*   FILE: broyden_output.c                         */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
-/*    LU-DECOMPOSITION WITH PIVOTING                */
-/*      and                                         */
-/*    SOLVING OF A LINEAR EQUATION SYSTEM           */
+/*    BROYDEN METHOD                                */
 /*                                                  */
-/*   Excercise #20 for the lecture                  */
+/*   Excercise #45 for the lecture                  */
 /*   NUMERICAL MATHEMATICS in 2014/15               */
 /*   by Prof. Dr. Blank                             */
 /*   University of Regensburg                       */
@@ -29,7 +27,10 @@
 //---------------------------------------------------
 
 #include<stdio.h>            // printf(), scanf()
-#include"broyden_output.h"   // Broyden's method
+
+#include"broyden_output.h"
+
+
 
 // greetings +  instructions
 void print_init()
@@ -43,6 +44,7 @@ void print_init()
   printf("\n****************************************************\n");
 };
 
+
 // bye bye
 void print_exit()
 {
@@ -51,6 +53,7 @@ void print_exit()
   printf("\n             Kerstin Blomenhofer");
   printf("\n             Gesina Schwalbe\n\n");
 }
+
 
 // matrix
 void print_matrix(double** A, int m, int n)
@@ -61,17 +64,18 @@ void print_matrix(double** A, int m, int n)
       //columns
       for(int j=0; j<n; j++)
 	{
-	  printf("  %6.3f  ", *(*(A+i)+j)); // simple print: total 6 numbers, 3 after comma
+	  printf(MATRIX_ENTRY, A[i][j]);
 	}
       printf("\n");  // begin new row
     }
 }
+
 
 // vector
 void print_vector(double* b, int dim)
 {
   for(int i=0; i<dim; i++)
     {
-      printf("   %f \n", *(b+i));
+      printf(MATRIX_ENTRY "\n", b[i]);
     }
 }

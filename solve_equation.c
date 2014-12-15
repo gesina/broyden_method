@@ -1,7 +1,7 @@
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: solve_equation.h                         */
+/*   FILE: solve_equation.c                         */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
@@ -26,10 +26,10 @@
 //
 //---------------------------------------------------
 
-#include <float.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <float.h>          // DBL_EPSILON
+#include <stdio.h>          // printf()
+#include <stdlib.h>         // malloc() for vector pi
+#include <math.h>           // fabs()
 
 #include "solve_equation.h"
 #include "matrix_operations.h"
@@ -38,9 +38,6 @@
 // of given Matrix A, returns completion indicator
 int lu_decomposition(double** A, int* pi, int dim)
 {
-  // write pi
-  //for (int i=0; i<dim; i++){ *(pi+i) = i;}
-
   double max_entry=0, next_entry=0;
   int temp_pi=NULL;
   double* temp_a=NULL;
@@ -51,8 +48,8 @@ int lu_decomposition(double** A, int* pi, int dim)
       //---------------------------------
       // find maximum absolute value of entries
       max_entry= fabs(A[k][k]);      // set max to abs. value
-                                         // of entry #k in row #k
-      int pos_max_entry=k;
+                                     // of entry #k in row #k
+      int pos_max_entry = k;
       
       for (int i=k+1; i<dim; i++)
 	{
@@ -66,7 +63,7 @@ int lu_decomposition(double** A, int* pi, int dim)
 	}
 
       // swap rows
-      temp_pi = pi[k];                       // in pi
+      temp_pi = pi[k];                     // in pi
       pi[k]=pi[pos_max_entry];
       pi[pos_max_entry]=temp_pi; 
 
@@ -138,7 +135,6 @@ void forward_substitution(double* b, int* pi, double** L, int dim)
 }
 
 
-
 // BACKWARD SUBSTITUTION
 // writes solution of Ux=z into given vector x
 void backward_substitution(double** U, double* z, double* x, int dim)
@@ -187,8 +183,6 @@ int solve_equation(double** A, double* b, int dimension, double* x)
   if (!LU)            // error with allociation?
     { return -1; }  // return: allociation error
   copy_matrix(A, LU, dimension, dimension);
-  // rows
-  // DEBUGGING printf("solving with A: %f, LU: %f\n", **A, **LU);
   
   // backup of b
   double* z= init_vector(dimension);
@@ -198,18 +192,15 @@ int solve_equation(double** A, double* b, int dimension, double* x)
   // (step=0: worked well;
   //  step>0: failed on step number step)
   int step=lu_decomposition(LU, pi, dimension);
-  if( step>0 ) // worked?
-    { return step; }
+  if( step>0 ) { return step; } // worked?
 
   // substitutions
   forward_substitution(z, pi, LU, dimension); 
   backward_substitution(LU,z, x, dimension); 
-
 
   free(LU);
   free(pi);
   free(z);
 
   return 0;  // return step
-  
 }

@@ -2,7 +2,7 @@ cc = gcc
 CFLAGS = -Wall -Werror -O2 -std=c99 -lm
 LCFLAGS = $(CFLAGS)
 OCFLAGS = $(CFLAGS) -c
-MAINBIN = a.out
+MAINBIN = broyden_method
 
 DEPFILE = broyden.deps
 

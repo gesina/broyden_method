@@ -37,9 +37,10 @@ struct x_f_step_flag
   double* x;      // x_k for max. k
   double* f;      // f(x_k) 
   int step;       // k
-  int flag;     // success indicator:
-                  // (1) maximal iteration step input not enough
-                  // (0) successful iteration within tolerance
+  int flag;       // success indicator:
+                    // (2) LU decomposition failed on returned step
+                    // (1) maximal iteration step input not enough
+                    // (0) successful iteration within tolerance
 };
 
 struct x_f_step_flag broyden_method(void (*function)(double*,double*), int, double*, double**, int, double);

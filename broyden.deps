@@ -1,4 +1,5 @@
-broyden_file.o: broyden_file.c broyden_file.h broyden_input.h
+broyden_file.o: broyden_file.c broyden_file.h broyden_input.h \
+ broyden_output.h
 broyden_functions.o: broyden_functions.c broyden_functions.h \
  matrix_operations.h broyden_output.h
 broyden_input.o: broyden_input.c broyden_input.h broyden_output.h

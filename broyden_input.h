@@ -3,7 +3,7 @@
 
 /* ************************************************ */
 /*                                                  */
-/*   FILE: input.h                                  */
+/*   FILE: broyden_input.h                          */
 /*                                                  */
 /*   PROJECT:                                       */
 /*   *************                                  */
@@ -26,7 +26,6 @@
 //---------------------------------------------------
 //
 //   All input functions
-//    and memory allocation
 //
 //---------------------------------------------------
 
@@ -48,10 +47,10 @@ double get_tolerance();
 // gets maximum number of iteration steps
 int get_maxit();
 
-// gets+sets matrix entries from user (A)
+// gets+sets entries of given matrix
 void set_matrix(double**, int, int);
 
-// gets+sets vector entries from user (b)
+// gets+sets entries of given vector
 void set_vector(double*, int);
 
 

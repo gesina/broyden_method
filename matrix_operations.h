@@ -58,7 +58,7 @@ double** mult_matrix(double**, double**, int, int, int);
 // addition of matrices
 double** add_matrix(double**, double**, int, int);
 
-// norm of vectors (l_2-norm)
-double norm_vector(double*, int);
+// scalar product of vectors (l_2-norm)
+double scprod_vector(double*, int);
 
 #endif

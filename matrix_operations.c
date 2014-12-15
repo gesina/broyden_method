@@ -30,13 +30,13 @@
 #include <stdio.h>             // printf, scanf
 #include <stdlib.h>            // malloc
 #include <math.h>              // pow, exp, sin
+
 #include "matrix_operations.h"
 
 
 
 // MEMORY MANAGEMENT
-
-// allocation functions
+// allocates space for matrix in memory
  double** init_matrix(int m, int n)
 {
   // allocate space for matrix row-pointer
@@ -65,12 +65,12 @@
 	}
     }
 
-  return matrix;
-  
+  return matrix;  
 };
 
 
-double* init_vector(int dim) // allocates memory for vector
+// allocates memory for vector
+double* init_vector(int dim)
 {
   // allocate space for vector
   double* vector = (double*) malloc(dim*sizeof(double));
@@ -83,13 +83,12 @@ double* init_vector(int dim) // allocates memory for vector
       return NULL; // exit
     }
 
-  return vector;
-  
+  return vector;  
 };
 
 
 
-// memory free functions
+// memory free function for matrix
 void free_memory_matrix(double** A, int m, int n)     // free memory from matrix
 {
   // free rows
@@ -100,7 +99,7 @@ void free_memory_matrix(double** A, int m, int n)     // free memory from matrix
   free(A);
 }
 
-
+// memory free function for vector
 void free_memory_vector(void* x)                 // free memory from vector
 {
     free(x);
@@ -125,12 +124,12 @@ void copy_matrix(double** A, double** B,int m, int n) // copy matrix A into B
 }
 
 
-// copy function for vectors
-void copy_vector(double* a, double* b ,int dim) // copy vector a into b
+// copy function for vectors  (copy vector a into b)
+void copy_vector(double* a, double* b ,int dim)
 {
   for (int i=0; i<dim; i++)
     {
-      *(a+i) = *(b+i);
+      a[i] = b[i];
     }
 }
 
@@ -146,26 +145,26 @@ double** mult_matrix(double** A, double** B, int m, int n, int l)
   for(int i=0; i<m; i++) //Zeilen
     {
     for(int k=0; k<l; k++) //Spalten
-    {
-    	for(int j=0; j<n; j++) 
-    	{
-    	  C[i][k] += A[i][j] * B[j][k];
-    	}
+      {
+	for(int j=0; j<n; j++) 
+	  {
+	    C[i][k] += A[i][j] * B[j][k];
+	  }
+      }
     }
-  }
   
   return C;
 }
 
 
-// addition of matrices
+// addition of matrices (returns A+B)
 double** add_matrix(double** A, double** B, int m, int n)
 {
   double** C=init_matrix(m, n);
   
-  for(int i=0; i<m; i++) //Zeilen
+  for(int i=0; i<m; i++)   // rows
   {
-    for(int j=0; j<n; j++) //Spalten
+    for(int j=0; j<n; j++) // columns
       {
   	  C[i][j] = A[i][j] + B[i][j];
       }
@@ -176,14 +175,14 @@ double** add_matrix(double** A, double** B, int m, int n)
 
 
 
-// norm of vectors (l_2-norm)
-double norm_vector(double* x, int dim)
+// scalar product of vectors (l_2-norm)
+double scprod_vector(double* x, int dim)
 {
-  double norm=0;
+  double scprod=0;
   for(int i=0; i<dim; i++)
     {
-      norm += pow(x[i],2);
+      scprod += pow(x[i],2);
     }
-  norm=sqrt(norm);
-  return norm;
+
+  return scprod;
 }
