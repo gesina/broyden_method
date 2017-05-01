@@ -38,4 +38,4 @@ describe the functionality.
   (see also `FUNCTION_OPTIONS*` in `broyden_input.h`)
 - Main function: `broyden_main.*`
 - File-/Terminal-IO: `broyden_file.*`, `broyden_input.*`, `broyden_output.*`
-- Build helper: `Makefile`, `broyden.deps`
+- Build helper: `Makefile`, `broyden.deps` (automatically generated)
