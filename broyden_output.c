@@ -26,9 +26,9 @@
 //
 //---------------------------------------------------
 
-#include<stdio.h>            // printf(), scanf()
+#include <stdio.h>            // printf(), scanf()
 
-#include"broyden_output.h"
+#include "broyden_output.h"
 
 
 
