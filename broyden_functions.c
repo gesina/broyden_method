@@ -86,7 +86,7 @@ _Bool ex_ii_predef_x1(double** x, double*** B, double* tol, int* maxit) {
   print_vector(*x, 2);
   printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
-  printf("  Tolerance:  %f\n", *tol);
+  printf("  Tolerance:"MATRIX_ENTRY"\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
   return 0;
@@ -121,7 +121,7 @@ _Bool ex_ii_predef_x2(double** x, double*** B, double* tol, int* maxit) {
   print_vector(*x, 2);
   printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
-  printf("  Tolerance:  %f\n", *tol);
+  printf("  Tolerance:"MATRIX_ENTRY"/n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
   return 0;
@@ -156,7 +156,7 @@ _Bool ex_iii_predef_B1(double**x, double*** B, double* tol, int* maxit) {
   print_vector(*x, 2);
   printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
-  printf("  Tolerance:  %f\n", *tol);
+  printf("  Tolerance:"MATRIX_ENTRY"\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
   return 0;
@@ -191,7 +191,7 @@ _Bool ex_iii_predef_B2(double** x, double*** B, double* tol, int* maxit) {
   print_vector(*x, 2);
   printf("  Starting differential B_0:\n");
   print_matrix(*B, 2,2);
-  printf("  Tolerance:  %f\n", *tol);
+  printf("  Tolerance:"MATRIX_ENTRY"\n", *tol);
   printf("  Maximum number of steps:  %i\n", *maxit);
 
   return 0;
